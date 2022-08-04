@@ -6,6 +6,11 @@ import './App.css';
 
 
 class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state.searchResults = [];
+  }
+
   render() {
     return (
       <div>
@@ -13,7 +18,7 @@ class App extends React.Component {
         <div className="App">
           <SearchBar />
           <div className="App-playlist">
-            <SearchResults />
+            <SearchResults searchResults={this.state.searchResults} />
             <Playlist />
           </div>
         </div>
