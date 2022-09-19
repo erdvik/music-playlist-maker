@@ -26,7 +26,28 @@ const Spotify = {
         } else {
             window.location = spotifyUrl;
         }
+    },
 
+    search(term) {
+        const searchUrl = `https://api.spotify.com/v1/search?type=track&q=${term.replace(' ', '%20')}`;
+        return fetch(searchUrl, {
+            headers: {
+                Autorization: `Bearer ${accessToken}`
+            }
+        })
+        .then(response => response.json())
+        .then(jsonResponse => {
+            if (!jsonResponse.tracks) return [];
+            return jsonResponse.tracks.items.map(track => {
+                return {
+                    ID: track.id,
+                    Name: track.name,
+                    Artist: track.artists[0].name,
+                    Album: track.album.name,
+                    URI: track.uri
+                }
+            })
+        })
     }
 }
 
